@@ -5,14 +5,12 @@ import com.pricecheker.project.infrastructure.adapters.inbound.rest.controller.S
 import com.pricecheker.project.infrastructure.adapters.inbound.rest.mapper.ShopRestInbountMapper;
 import com.pricecheker.project.infrastructure.adapters.inbound.rest.request.CreateShopRequest;
 import com.pricecheker.project.infrastructure.adapters.inbound.rest.response.GenericResponse;
-import com.pricecheker.project.infrastructure.adapters.inbound.rest.response.shop.ShopViewResponse;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/shops")
@@ -24,7 +22,12 @@ public class ShopRestControllerAdapterImpl implements ShopRestControllerAdapter 
   private final ShopUseCaseServicePort shopUseCaseServicePort;
 
   @Override
-  public ResponseEntity<GenericResponse<ShopViewResponse>> getAllShops() {
+  public ResponseEntity<GenericResponse> getShop(String shopId) {
+    return null;
+  }
+
+  @Override
+  public ResponseEntity<GenericResponse> getAllShops() {
     log.info("[Start]  ShopRestControllerAdapterImpl.getAllShops - Getting all shops");
 
     var shops =
@@ -32,17 +35,33 @@ public class ShopRestControllerAdapterImpl implements ShopRestControllerAdapter 
 
     log.info("[End]  ShopRestControllerAdapterImpl.getAllShops - Getting all shops");
     return ResponseEntity.ok(
-        GenericResponse.<ShopViewResponse>builder().id(UUID.randomUUID()).data(shops).build());
+        GenericResponse.builder().id(UUID.randomUUID()).data(shops).build());
   }
 
   @Override
-  public ResponseEntity<GenericResponse<ShopViewResponse>> createShop(
-      CreateShopRequest createShopRequest) {
+  public ResponseEntity<GenericResponse> createShop(CreateShopRequest createShopRequest) {
     log.info(
         "[Start]  ShopRestControllerAdapterImpl.createShop - Creating shop: {}", createShopRequest);
 
+    var shop = shopUseCaseServicePort.createStore(mapper.toCreateStoreDto(createShopRequest));
+
     log.info(
         "[End]  ShopRestControllerAdapterImpl.createShop - Creating shop: {}", createShopRequest);
+    return ResponseEntity.ok(
+        GenericResponse.builder()
+            .id(UUID.randomUUID())
+            .data(mapper.toShopViewResponse(shop))
+            .build());
+  }
+
+  @Override
+  public ResponseEntity<GenericResponse> updateShop(
+      String shopId, CreateShopRequest createShopRequest) {
+    return null;
+  }
+
+  @Override
+  public ResponseEntity<Void> deleteShop(String shopId) {
     return null;
   }
 }
