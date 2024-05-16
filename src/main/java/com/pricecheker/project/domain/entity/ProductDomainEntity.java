@@ -11,10 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductDomainEntity {
 
-    private String id;
-    private String name;
-    private String description;
-    private StoreDomainEntity store;
-    private CategoryDomainEntity category;
-    private List<PriceDomainEntity> prices;
+  private String id;
+  private String name;
+  private String description;
 }
