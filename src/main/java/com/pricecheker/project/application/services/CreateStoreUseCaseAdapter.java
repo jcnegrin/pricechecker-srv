@@ -3,7 +3,7 @@ package com.pricecheker.project.application.services;
 import com.pricecheker.project.application.ports.inbound.CreateStoreUseCasePort;
 import com.pricecheker.project.application.ports.outbound.StoreRepositoryPort;
 import com.pricecheker.project.domain.dto.CreateStoreDto;
-import com.pricecheker.project.domain.entity.StoreDomainEntity;
+import com.pricecheker.project.domain.entity.ShopDomainEntity;
 import com.pricecheker.project.domain.exception.StoreAlreadyExistsException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -18,14 +18,14 @@ public class CreateStoreUseCaseAdapter implements CreateStoreUseCasePort {
     private final StoreRepositoryPort storeRepositoryPort;
 
     @Override
-    public StoreDomainEntity createStore(CreateStoreDto createStoreDto) {
+    public ShopDomainEntity createStore(CreateStoreDto createStoreDto) {
 
-        StoreDomainEntity storeDomainEntity = storeRepositoryPort.findByName(createStoreDto.getName());
+        ShopDomainEntity storeDomainEntity = storeRepositoryPort.findByName(createStoreDto.getName());
         boolean storeExists = storeDomainEntity != null;
 
         if (!storeExists) {
-            StoreDomainEntity createdStore =
-                    storeRepositoryPort.save(StoreDomainEntity
+            ShopDomainEntity createdStore =
+                    storeRepositoryPort.save(ShopDomainEntity
                         .builder()
                         .name(createStoreDto.getName())
                         .url(createStoreDto.getUrl())

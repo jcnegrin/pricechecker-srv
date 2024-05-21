@@ -3,9 +3,11 @@ package com.pricecheker.project.application.services;
 import com.pricecheker.project.application.ports.inbound.ShopUseCaseServicePort;
 import com.pricecheker.project.application.ports.outbound.StoreRepositoryPort;
 import com.pricecheker.project.domain.dto.CreateStoreDto;
-import com.pricecheker.project.domain.entity.StoreDomainEntity;
+
 import java.util.List;
 import java.util.UUID;
+
+import com.pricecheker.project.domain.entity.ShopDomainEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +18,15 @@ public class ShopUseCaseService implements ShopUseCaseServicePort {
   private final StoreRepositoryPort storeRepositoryPort;
 
   @Override
-  public List<StoreDomainEntity> getStores() {
+  public List<ShopDomainEntity> getStores() {
     return storeRepositoryPort.findAll();
   }
 
   @Override
-  public StoreDomainEntity createStore(CreateStoreDto store) {
+  public ShopDomainEntity createStore(CreateStoreDto store) {
 
-    StoreDomainEntity storeDomainEntity =
-        StoreDomainEntity.builder()
+    ShopDomainEntity storeDomainEntity =
+        ShopDomainEntity.builder()
             .id(UUID.randomUUID().toString())
             .name(store.getName())
             .url(store.getUrl())

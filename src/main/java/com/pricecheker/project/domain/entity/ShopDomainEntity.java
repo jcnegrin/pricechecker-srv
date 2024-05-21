@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class StoreDomainEntity {
+public class ShopDomainEntity {
 
     private String id;
     private String name;

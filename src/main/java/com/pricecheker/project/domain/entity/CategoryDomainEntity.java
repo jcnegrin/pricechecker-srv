@@ -13,8 +13,6 @@ public class CategoryDomainEntity {
 
     private String id;
     private String name;
-    private String categoryCode;
     private List<ProductDomainEntity> products;
-    private CategoryDomainEntity parentCategory;
-    private List<CategoryDomainEntity> subcategories;
+
 }

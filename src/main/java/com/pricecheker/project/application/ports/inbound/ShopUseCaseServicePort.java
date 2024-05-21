@@ -1,14 +1,15 @@
 package com.pricecheker.project.application.ports.inbound;
 
 import com.pricecheker.project.domain.dto.CreateStoreDto;
-import com.pricecheker.project.domain.entity.StoreDomainEntity;
 import java.util.List;
+
+import com.pricecheker.project.domain.entity.ShopDomainEntity;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
 public interface ShopUseCaseServicePort {
 
-  List<StoreDomainEntity> getStores();
+  List<ShopDomainEntity> getStores();
 
-  StoreDomainEntity createStore(CreateStoreDto store);
+  ShopDomainEntity createStore(CreateStoreDto store);
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@Table(name = "Categoria", schema = "PriceChecker")
+@Table(name = "Category", schema = "PriceChecker")
 @Entity
 public class CategoryEntity {
 
@@ -18,20 +18,10 @@ public class CategoryEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(nullable = false, name = "nombre")
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
-
-    @Column(name = "categoriaCodigo")
-    private String categoryCode;
 
     @OneToMany(mappedBy = "category")
     private List<ProductEntity> products;
-
-    @ManyToOne
-    @JoinColumn(name = "codigoCategoria", referencedColumnName = "id")
-    private CategoryEntity parentCategory;
-
-    @OneToMany(mappedBy = "parentCategory")
-    private List<CategoryEntity> subcategories;
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
-@Table(name = "Producto", schema = "PriceChecker")
+@Table(name = "Product", schema = "PriceChecker")
 @Entity
 public class ProductEntity {
 
@@ -19,18 +19,24 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(nullable = false, name = "nombre")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(nullable = false, name = "descripcion")
+    @Column(name = "brand", length = 50)
+    private String brand;
+
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "codigoTienda", referencedColumnName = "id")
-    private StoreEntity store;
+    @Column(name = "image_url", length = 255)
+    private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "codigoCategoria", referencedColumnName = "id")
+    @JoinColumn(name= "shop_id", referencedColumnName = "id")
+    private ShopEntity shop;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private CategoryEntity category;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)

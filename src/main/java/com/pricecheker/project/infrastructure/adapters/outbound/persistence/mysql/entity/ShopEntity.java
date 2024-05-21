@@ -1,7 +1,6 @@
 package com.pricecheker.project.infrastructure.adapters.outbound.persistence.mysql.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,20 +11,20 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "Tienda", schema = "PriceChecker")
-public class StoreEntity implements Serializable {
+@Table(name = "Shop", schema = "PriceChecker")
+public class ShopEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(nullable = false, name = "nombre")
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "url", length = 255)
     private String url;
 
-    @OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY)
     private List<ProductEntity> products = new ArrayList<>();
 
 }
