@@ -16,5 +16,4 @@ public class PriceDomainEntity {
     private BigDecimal amount;
     private LocalDateTime updateDate;
     private ProductDomainEntity product;
-    private ShopDomainEntity shop;
 }

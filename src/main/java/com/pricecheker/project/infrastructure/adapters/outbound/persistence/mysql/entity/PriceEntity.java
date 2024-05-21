@@ -23,8 +23,4 @@ public class PriceEntity {
   @ManyToOne
   @JoinColumn(name = "product_id", referencedColumnName = "id")
   private ProductEntity product;
-
-  @ManyToOne
-  @JoinColumn(name = "shop_id", referencedColumnName = "id")
-  private ShopEntity shop;
 }
