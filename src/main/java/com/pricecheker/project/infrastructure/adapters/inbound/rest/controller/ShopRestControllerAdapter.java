@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Shop Rest Controller API")
+@Tag(name = "Shop Rest Controller APIs")
 public interface ShopRestControllerAdapter {
 
   @Operation(
