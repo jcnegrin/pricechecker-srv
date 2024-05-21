@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -14,17 +15,16 @@ import java.util.List;
 @Table(name = "Shop", schema = "PriceChecker")
 public class ShopEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
-    @Column(name = "name", nullable = false, length = 100)
-    private String name;
+  @Column(name = "name", nullable = false, length = 100)
+  private String name;
 
-    @Column(name = "url", length = 255)
-    private String url;
+  @Column(name = "url", length = 255)
+  private String url;
 
-    @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY)
-    private List<ProductEntity> products = new ArrayList<>();
-
+  @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY)
+  private List<ProductEntity> products = new ArrayList<>();
 }
