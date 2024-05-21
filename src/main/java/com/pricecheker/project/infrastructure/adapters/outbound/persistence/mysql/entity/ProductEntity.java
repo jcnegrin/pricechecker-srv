@@ -1,13 +1,10 @@
 package com.pricecheker.project.infrastructure.adapters.outbound.persistence.mysql.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
+import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-
-import java.util.List;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -16,9 +13,7 @@ import java.util.UUID;
 @Entity
 public class ProductEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
+  @Id private String id;
 
   @Column(name = "name", nullable = false)
   private String name;

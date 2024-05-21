@@ -12,25 +12,23 @@ import lombok.NoArgsConstructor;
 @Entity
 public class UserEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+  @Id private String id;
 
-    @Column(name = "name", nullable = false, length = 30)
-    private String name;
+  @Column(name = "name", nullable = false, length = 30)
+  private String name;
 
-    @Column(name = "surname", nullable = false, length = 50)
-    private String surname;
+  @Column(name = "surname", nullable = false, length = 50)
+  private String surname;
 
-    @Column(name = "user_name", unique = true, length = 100)
-    private String userName;
+  @Column(name = "user_name", unique = true, length = 100)
+  private String userName;
 
-    @Column(name = "email", unique = true, length = 100)
-    private String email;
+  @Column(name = "email", unique = true, length = 100)
+  private String email;
 
-    @Column(name = "password", length = 100)
-    private String password;
+  @Column(name = "password", length = 100)
+  private String password;
 
-    @Column(name = "registration_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime registrationDate;
+  @Column(name = "registration_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+  private LocalDateTime registrationDate;
 }

@@ -11,9 +11,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "favorite", schema = "PriceChecker")
 public class FavoriteEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
+  @Id private String id;
 
   @ManyToOne
   @JoinColumn(name = "user_id", referencedColumnName = "id")

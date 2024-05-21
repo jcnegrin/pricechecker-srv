@@ -12,14 +12,11 @@ import lombok.NoArgsConstructor;
 @Entity
 public class CategoryEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+  @Id private String id;
 
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
+  @Column(name = "name", nullable = false, length = 50)
+  private String name;
 
-    @OneToMany(mappedBy = "category")
-    private List<ProductEntity> products;
-
+  @OneToMany(mappedBy = "category")
+  private List<ProductEntity> products;
 }
