@@ -12,6 +12,7 @@ import java.util.List;
 */
 public class MercadonaScraper implements ScraperStrategy {
 
+  private static final String POSTAL_CODE = "28006";
   private final ShopDetails shopDetails;
 
   public MercadonaScraper(ShopDetails shopDetails) {
