@@ -2,17 +2,18 @@ package com.pricecheker.project.infrastructure.adapters.outbound.persistence.mys
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.UUID;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Table(name = "user", schema = "PriceChecker")
+@Table(name = "user")
 @Entity
 public class UserEntity {
 
-  @Id private String id;
+  @Id
+  @Column(name = "id", nullable = false, length = 36)
+  private String id;
 
   @Column(name = "name", nullable = false, length = 30)
   private String name;

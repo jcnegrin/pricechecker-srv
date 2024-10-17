@@ -9,15 +9,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDomainEntity {
-    private String id;
-    private String name;
-    private String surname;
-    private String userName;
-    private String email;
-    private String password;
-    private LocalDateTime registrationDate;
-
-
-
-
+  private String id;
+  private String name;
+  private String surname;
+  private String userName;
+  private String email;
+  private String password;
+  private LocalDateTime registrationDate;
 }

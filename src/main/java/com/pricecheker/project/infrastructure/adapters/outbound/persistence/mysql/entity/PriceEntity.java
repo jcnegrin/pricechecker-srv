@@ -8,19 +8,21 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Table(name = "Price", schema = "PriceChecker")
+@Table(name = "price")
 @Entity
 public class PriceEntity {
 
-  @Id private String id;
+  @Id
+  @Column(name = "id", nullable = false, length = 36)
+  private String id;
 
-  @Column(precision = 10, scale = 2)
+  @Column(name = "amount", precision = 10, scale = 2)
   private BigDecimal amount;
 
   @Column(name = "update_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
   private LocalDateTime updateDate;
 
-  @ManyToOne
-  @JoinColumn(name = "product_id", referencedColumnName = "id")
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "product_id", foreignKey = @ForeignKey(name = "fk_price_product"))
   private ProductEntity product;
 }

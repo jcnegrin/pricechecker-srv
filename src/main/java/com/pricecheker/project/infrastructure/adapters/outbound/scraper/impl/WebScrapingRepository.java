@@ -1,7 +1,6 @@
 package com.pricecheker.project.infrastructure.adapters.outbound.scraper.impl;
 
 import com.pricecheker.project.application.ports.outbound.WebScrapingRepositoryPort;
-import com.pricecheker.project.domain.entity.ShopProductDomainEntity;
 import com.pricecheker.project.infrastructure.adapters.outbound.scraper.factory.ScraperFactory;
 import java.util.List;
 import java.util.Map;

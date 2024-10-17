@@ -1,23 +1,24 @@
 package com.pricecheker.project.infrastructure.adapters.outbound.persistence.mysql.entity;
 
 import jakarta.persistence.*;
-import java.util.UUID;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "favorite", schema = "PriceChecker")
+@Table(name = "favorite")
 public class FavoriteEntity {
 
-  @Id private String id;
+  @Id
+  @Column(name = "id", nullable = false, length = 36)
+  private String id;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_favorite_user"))
   private UserEntity user;
 
-  @ManyToOne
-  @JoinColumn(name = "product_id", referencedColumnName = "id")
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "product_id", foreignKey = @ForeignKey(name = "fk_favorite_product"))
   private ProductEntity product;
 }

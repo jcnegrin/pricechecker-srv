@@ -1,7 +1,6 @@
 package com.pricecheker.project.infrastructure.adapters.outbound.persistence.mysql.entity;
 
 import jakarta.persistence.*;
-import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -9,13 +8,15 @@ import lombok.experimental.Accessors;
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
-@Table(name = "Product", schema = "PriceChecker")
+@Table(name = "product")
 @Entity
 public class ProductEntity {
 
-  @Id private String id;
+  @Id
+  @Column(name = "id", nullable = false, length = 36)
+  private String id;
 
-  @Column(name = "name", nullable = false)
+  @Column(name = "name", nullable = false, length = 255)
   private String name;
 
   @Column(name = "brand", length = 50)
@@ -28,13 +29,10 @@ public class ProductEntity {
   private String imageUrl;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "shop_id", referencedColumnName = "id")
+  @JoinColumn(name = "shop_id", foreignKey = @ForeignKey(name = "fk_product_shop"))
   private ShopEntity shop;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "category_id", referencedColumnName = "id")
+  @JoinColumn(name = "category_id", foreignKey = @ForeignKey(name = "fk_product_category"))
   private CategoryEntity category;
-
-  @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-  private List<PriceEntity> prices;
 }
