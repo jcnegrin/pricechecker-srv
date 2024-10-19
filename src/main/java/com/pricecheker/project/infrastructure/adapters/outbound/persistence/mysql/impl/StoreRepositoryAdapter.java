@@ -1,10 +1,9 @@
 package com.pricecheker.project.infrastructure.adapters.outbound.persistence.mysql.impl;
 
 import com.pricecheker.project.application.ports.outbound.StoreRepositoryPort;
-
 import com.pricecheker.project.domain.entity.ShopDomainEntity;
 import com.pricecheker.project.infrastructure.adapters.outbound.persistence.mysql.entity.ShopEntity;
-import com.pricecheker.project.infrastructure.adapters.outbound.persistence.mysql.mapper.StoreOutboundMapper;
+import com.pricecheker.project.infrastructure.adapters.outbound.persistence.mysql.mapper.ShopRepositoryMapper;
 import com.pricecheker.project.infrastructure.adapters.outbound.persistence.mysql.repository.StoreRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class StoreRepositoryAdapter implements StoreRepositoryPort {
 
   @Autowired private final StoreRepository storeRepository;
-  @Autowired private final StoreOutboundMapper mapper;
+  @Autowired private final ShopRepositoryMapper mapper;
 
   @Override
   public ShopDomainEntity save(ShopDomainEntity storeDomainEntity) {

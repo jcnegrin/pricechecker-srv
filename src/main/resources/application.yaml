@@ -5,12 +5,15 @@ spring:
     hibernate:
       ddl-auto: none
   datasource:
-    url: jdbc:mysql://localhost:3306/price_checker
+    url: jdbc:mysql://localhost:3306/pricechecker
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+    hikari:
+      connection-timeout: 30000
+      validation-timeout: 5000
+      maximum-pool-size: 10
 scheduling:
   cron:
-    dailyProductExtract: '0 0/5 * * * ?'
+    dailyProductExtract: '0 0 0 * * ?'
   zone: 'Europe/Madrid'

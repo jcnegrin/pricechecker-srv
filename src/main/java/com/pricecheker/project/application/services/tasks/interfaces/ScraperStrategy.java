@@ -8,7 +8,8 @@ package com.pricecheker.project.application.services.tasks.interfaces;
 
 import com.pricecheker.project.application.services.tasks.model.ScrapedProduct;
 import java.util.List;
+import java.util.Map;
 
 public interface ScraperStrategy {
-  List<ScrapedProduct> scrapeProducts();
+  Map<String, List<ScrapedProduct>> scrapeProducts();
 }

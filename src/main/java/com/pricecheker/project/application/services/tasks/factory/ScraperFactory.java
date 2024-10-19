@@ -7,7 +7,6 @@ package com.pricecheker.project.application.services.tasks.factory;
 */
 
 import com.pricecheker.project.application.services.tasks.interfaces.ScraperStrategy;
-import com.pricecheker.project.application.services.tasks.model.ShopDetails;
 import com.pricecheker.project.application.services.tasks.scrapers.DiaScraper;
 import com.pricecheker.project.application.services.tasks.scrapers.MercadonaScraper;
 
@@ -17,10 +16,10 @@ public class ScraperFactory {
     throw new IllegalStateException("Utility class");
   }
 
-  public static ScraperStrategy getScraper(String store, ShopDetails shopDetails) {
+  public static ScraperStrategy getScraper(String store, String url) {
     return switch (store.toUpperCase()) {
-      case "MERCADONA" -> new MercadonaScraper(shopDetails);
-      case "DIA" -> new DiaScraper(shopDetails);
+      case "MERCADONA" -> new MercadonaScraper(url);
+      case "DIA" -> new DiaScraper(url);
       default -> throw new IllegalArgumentException("Invalid store");
     };
   }

@@ -28,11 +28,11 @@ public class ProductEntity {
   @Column(name = "image_url", length = 255)
   private String imageUrl;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "shop_id", foreignKey = @ForeignKey(name = "fk_product_shop"))
   private ShopEntity shop;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "category_id", foreignKey = @ForeignKey(name = "fk_product_category"))
   private CategoryEntity category;
 }

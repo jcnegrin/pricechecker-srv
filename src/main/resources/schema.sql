@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS pricechecker;
+CREATE DATABASE IF NOT EXISTS pricecheker;
 
-USE pricechecker;
+USE pricecheker;
 
 CREATE TABLE user (
   id VARCHAR(36) NOT NULL PRIMARY KEY,
@@ -50,3 +50,12 @@ CREATE TABLE favorite (
   CONSTRAINT fk_favorite_user FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
   CONSTRAINT fk_favorite_product FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE
 );
+
+
+--
+
+INSERT INTO shop (id, name, url)
+VALUES ('123e4567-e89b-12d3-a456-426614174000', 'Mercadona', 'https://tienda.mercadona.es/categories/112');
+
+INSERT INTO shop (id, name, url)
+VALUES ('987e6543-b21a-34c5-d987-123456789012', 'Dia', 'https://www.dia.es');

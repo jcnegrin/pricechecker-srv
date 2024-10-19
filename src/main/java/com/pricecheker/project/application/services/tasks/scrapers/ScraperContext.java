@@ -3,6 +3,7 @@ package com.pricecheker.project.application.services.tasks.scrapers;
 import com.pricecheker.project.application.services.tasks.interfaces.ScraperStrategy;
 import com.pricecheker.project.application.services.tasks.model.ScrapedProduct;
 import java.util.List;
+import java.util.Map;
 
 /*
     Author: juannegrin
@@ -17,7 +18,7 @@ public class ScraperContext {
     this.scraperStrategy = scraperStrategy;
   }
 
-  public List<ScrapedProduct> scrapeProducts() {
+  public Map<String, List<ScrapedProduct>> scrapeProducts() {
     return scraperStrategy.scrapeProducts();
   }
 }
