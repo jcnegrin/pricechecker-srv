@@ -81,7 +81,7 @@ public class MercadonaScraper implements ScraperStrategy {
     log.info("Found {} product categories", productCategories.size());
 
     // TODO: Remove, just for testing purposes .sublIST(0, 1)
-    productCategories = productCategories.subList(0, 1);
+    // productCategories = productCategories.subList(0, 1);
 
     return productCategories.stream()
         .flatMap(category -> processCategory(page, category))

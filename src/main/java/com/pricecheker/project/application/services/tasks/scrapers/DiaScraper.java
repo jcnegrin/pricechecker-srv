@@ -39,8 +39,9 @@ public class DiaScraper implements ScraperStrategy {
 
       // TODO: Remove, just for testing purposes .sublIST(0, 1)
 
-      Map<String, List<ScrapedProduct>> productMap =
-          processCategories(page, categories.subList(0, 1));
+      // categories = categories.subList(0, 1);
+
+      Map<String, List<ScrapedProduct>> productMap = processCategories(page, categories);
 
       browser.close();
       log.info("DiaScraper finished successfully.");
@@ -59,7 +60,7 @@ public class DiaScraper implements ScraperStrategy {
         .chromium()
         .launch(
             new BrowserType.LaunchOptions()
-                .setHeadless(true)
+                .setHeadless(false)
                 .setArgs(List.of("--disable-blink-features=AutomationControlled"))
                 .setSlowMo(200));
   }
