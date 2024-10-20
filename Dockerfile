@@ -14,8 +14,13 @@ WORKDIR /app
 # Copiar el jar del build
 COPY --from=build /app/target/project-0.0.1-SNAPSHOT.jar /app/myapp.jar
 
-# Instalar Playwright y navegadores necesarios
-RUN npx playwright install-deps && npx playwright install
+# Instalar Node.js y Playwright
+RUN apt-get update && apt-get install -y curl && \
+    curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g playwright && \
+    playwright install-deps && \
+    playwright install
 
 # Exponer el puerto 8080 (Spring Boot)
 EXPOSE 8080
