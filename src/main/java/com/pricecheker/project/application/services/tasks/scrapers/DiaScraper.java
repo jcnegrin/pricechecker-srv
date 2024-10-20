@@ -59,7 +59,7 @@ public class DiaScraper implements ScraperStrategy {
         .chromium()
         .launch(
             new BrowserType.LaunchOptions()
-                .setHeadless(false)
+                .setHeadless(true)
                 .setArgs(List.of("--disable-blink-features=AutomationControlled"))
                 .setSlowMo(200));
   }

@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS pricecheker;
+CREATE DATABASE IF NOT EXISTS pricechecker;
 
-USE pricecheker;
+USE pricechecker;
 
 CREATE TABLE user (
   id VARCHAR(36) NOT NULL PRIMARY KEY,
