@@ -12,7 +12,7 @@ FROM mcr.microsoft.com/playwright/java:latest
 WORKDIR /app
 
 # Copiar el jar del build
-COPY --from=build /app/target/myapp.jar /app/myapp.jar
+COPY --from=build /app/target/project-0.0.1-SNAPSHOT.jar /app/myapp.jar
 
 # Instalar Playwright y navegadores necesarios
 RUN npx playwright install-deps && npx playwright install
