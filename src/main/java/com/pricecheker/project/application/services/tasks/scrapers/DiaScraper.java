@@ -37,7 +37,10 @@ public class DiaScraper implements ScraperStrategy {
       List<Locator> categories = getCategories(page);
       log.info("Found {} categories to process.", categories.size());
 
-      Map<String, List<ScrapedProduct>> productMap = processCategories(page, categories);
+      // TODO: Remove, just for testing purposes .sublIST(0, 1)
+
+      Map<String, List<ScrapedProduct>> productMap =
+          processCategories(page, categories.subList(0, 1));
 
       browser.close();
       log.info("DiaScraper finished successfully.");
@@ -181,6 +184,10 @@ public class DiaScraper implements ScraperStrategy {
                         productLocator,
                         "p[data-test-id=\"search-product-card-unit-price\"]",
                         "N/A");
+                String productImgUrl =
+                    productLocator
+                        .locator("img[data-test-id=\"search-product-card-image\"]")
+                        .getAttribute("src");
 
                 log.info("Product found - Name: {}, Price: {}", productName, productPrice);
 
@@ -188,7 +195,7 @@ public class DiaScraper implements ScraperStrategy {
                     .id(UUID.randomUUID())
                     .name(productName)
                     .price(productPrice)
-                    .previousPrice(null)
+                    .imgUrl(productImgUrl)
                     .description("N/A")
                     .category(category)
                     .subCategory(subCategory)

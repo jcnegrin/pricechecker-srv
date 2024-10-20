@@ -18,7 +18,7 @@ public class ScrapedProduct {
   private final UUID id;
   private final String name;
   private final String price;
-  private final String previousPrice;
+  private final String imgUrl;
   private final String description;
   private final String category;
   private final String subCategory;

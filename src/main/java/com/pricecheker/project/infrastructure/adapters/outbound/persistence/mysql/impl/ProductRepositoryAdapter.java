@@ -5,6 +5,7 @@ import com.pricecheker.project.domain.entity.ProductDomainEntity;
 import com.pricecheker.project.domain.entity.ShopDomainEntity;
 import com.pricecheker.project.domain.query.FindAllProductsQuery;
 import com.pricecheker.project.infrastructure.adapters.outbound.persistence.mysql.entity.ShopEntity;
+import com.pricecheker.project.infrastructure.adapters.outbound.persistence.mysql.mapper.CategoryRepositoryMapper;
 import com.pricecheker.project.infrastructure.adapters.outbound.persistence.mysql.mapper.ProductRepositoryMapper;
 import com.pricecheker.project.infrastructure.adapters.outbound.persistence.mysql.mapper.ShopRepositoryMapper;
 import com.pricecheker.project.infrastructure.adapters.outbound.persistence.mysql.repository.ProductRepository;
@@ -20,6 +21,7 @@ public class ProductRepositoryAdapter implements ProductRepositoryPort {
   private final ProductRepository repository;
   private final ProductRepositoryMapper productRepositoryMapper;
   private final ShopRepositoryMapper shopRepositoryMapper;
+  private final CategoryRepositoryMapper categoryRepositoryMapper;
 
   @Override
   public List<ProductDomainEntity> findAllProducts(FindAllProductsQuery query) {
@@ -31,6 +33,11 @@ public class ProductRepositoryAdapter implements ProductRepositoryPort {
       String name, ShopDomainEntity shop) {
     ShopEntity shopEntity = shopRepositoryMapper.toEntity(shop);
     return repository.findByNameAndShop(name, shopEntity).map(productRepositoryMapper::toDomain);
+  }
+
+  @Override
+  public List<String> findCategoriesByShop(String shopId) {
+    return repository.findCategoriesByShopId(shopId);
   }
 
   @Override

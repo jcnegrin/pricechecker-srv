@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface ProductCategoryRepositoryPort {
   List<CategoryDomainEntity> findAllCategories();
 
+  Optional<CategoryDomainEntity> findCategoryById(String id);
+
   Optional<CategoryDomainEntity> findCategoryByName(String name);
 
   CategoryDomainEntity saveCategory(CategoryDomainEntity category);

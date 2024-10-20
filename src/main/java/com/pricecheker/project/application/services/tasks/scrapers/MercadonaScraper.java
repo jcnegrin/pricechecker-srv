@@ -80,9 +80,8 @@ public class MercadonaScraper implements ScraperStrategy {
     List<Locator> productCategories = page.locator("//html/body/div[1]/div[2]/div[1]/ul/li").all();
     log.info("Found {} product categories", productCategories.size());
 
-    // TODO: Delete this, testing purposes only
-
-    productCategories = productCategories.subList(0, 2);
+    // TODO: Remove, just for testing purposes .sublIST(0, 1)
+    productCategories = productCategories.subList(0, 1);
 
     return productCategories.stream()
         .flatMap(category -> processCategory(page, category))
@@ -131,18 +130,23 @@ public class MercadonaScraper implements ScraperStrategy {
               Locator data =
                   productCell.locator(".product-cell__content-link > .product-cell__info");
 
+              Locator imgData =
+                  productCell.locator(
+                      ".product-cell__content-link > .product-cell__image-wrapper > img");
+
               String name = getLocatorText(data.locator(".product-cell__description-name"));
               String price =
                   getLocatorText(data.locator(".product-price > div > .product-price__unit-price"));
               String format = getLocatorText(data.locator(".product-format"));
+              String img = imgData.getAttribute("src");
 
               log.info("Product found - Name: {}, Price: {}, Format: {}", name, price, format);
 
               return ScrapedProduct.builder()
                   .id(UUID.randomUUID())
-                  .name(name)
+                  .name(name + " " + format)
                   .price(price)
-                  .previousPrice(null)
+                  .imgUrl(img)
                   .description(format)
                   .category(categoryName)
                   .subCategory(subCategoryName)

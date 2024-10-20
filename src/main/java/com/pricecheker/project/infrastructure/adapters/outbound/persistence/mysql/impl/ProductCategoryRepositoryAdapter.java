@@ -28,6 +28,11 @@ public class ProductCategoryRepositoryAdapter implements ProductCategoryReposito
   }
 
   @Override
+  public Optional<CategoryDomainEntity> findCategoryById(String id) {
+    return repository.findById(id).map(mapper::toDomain);
+  }
+
+  @Override
   public Optional<CategoryDomainEntity> findCategoryByName(String name) {
     return repository.findByName(name).map(mapper::toDomain);
   }

@@ -10,8 +10,12 @@ import java.math.BigDecimal;
 public class CurrencyConverterUtils {
 
   public static BigDecimal convertStringToBigDecimal(String amount) {
-    String cleanedAmount = amount.replace("€", "").trim();
-    cleanedAmount = cleanedAmount.replace(",", ".");
-    return new BigDecimal(cleanedAmount);
+    try {
+      String cleanedAmount = amount.replace("€", "").trim();
+      cleanedAmount = cleanedAmount.replace(",", ".");
+      return new BigDecimal(cleanedAmount);
+    } catch (Exception e) {
+      return BigDecimal.ZERO;
+    }
   }
 }

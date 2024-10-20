@@ -51,6 +51,28 @@ CREATE TABLE favorite (
   CONSTRAINT fk_favorite_product FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE
 );
 
+--
+
+-- Índice compuesto para optimizar búsquedas por tienda y categoría de productos
+CREATE INDEX idx_product_shop_category ON product(shop_id, category_id);
+
+-- Índice individual para optimizar búsquedas de productos por categoría
+CREATE INDEX idx_product_category ON product(category_id);
+
+-- Índice individual para optimizar búsquedas de productos por tienda
+CREATE INDEX idx_product_shop ON product(shop_id);
+
+-- Índice para optimizar consultas de precios por producto (útil si consultas precios específicos de productos)
+CREATE INDEX idx_price_product ON price(product_id);
+
+-- Índice para optimizar búsquedas de productos en favoritos por usuario (útil si consultas los favoritos de un usuario)
+CREATE INDEX idx_favorite_user ON favorite(user_id);
+
+-- Índice para optimizar búsquedas de favoritos por producto (útil si consultas los usuarios que han marcado un producto como favorito)
+CREATE INDEX idx_favorite_product ON favorite(product_id);
+
+-- Índice para optimizar búsquedas por email de usuario (útil para logins o validaciones por email)
+CREATE INDEX idx_user_email ON user(email);
 
 --
 
