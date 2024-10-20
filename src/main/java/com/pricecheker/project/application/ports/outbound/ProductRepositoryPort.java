@@ -17,5 +17,10 @@ public interface ProductRepositoryPort {
 
   List<String> findCategoriesByShop(@NotNull String shopId);
 
+  List<ProductDomainEntity> findProductByShopAndCategory(
+      @NotNull String shopId, @NotNull String categoryId);
+
+  Optional<ProductDomainEntity> findProductById(@NotNull String productId);
+
   ProductDomainEntity saveProduct(@NotNull ProductDomainEntity product);
 }

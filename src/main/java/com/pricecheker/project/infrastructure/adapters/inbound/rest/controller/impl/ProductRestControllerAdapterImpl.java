@@ -1,11 +1,12 @@
 package com.pricecheker.project.infrastructure.adapters.inbound.rest.controller.impl;
 
 import com.pricecheker.project.application.ports.inbound.ProductUseCaseServicePort;
+import com.pricecheker.project.domain.view.ProductView;
 import com.pricecheker.project.infrastructure.adapters.inbound.rest.controller.ProductRestControllerAdapter;
-import com.pricecheker.project.infrastructure.adapters.inbound.rest.mapper.ProductRestInboundMapper;
 import com.pricecheker.project.infrastructure.adapters.inbound.rest.response.product.GetProductsResponse;
-import com.pricecheker.project.infrastructure.adapters.inbound.rest.response.product.ProductViewResponse;
 import java.util.List;
+import java.util.UUID;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,17 +20,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductRestControllerAdapterImpl implements ProductRestControllerAdapter {
 
   private final ProductUseCaseServicePort productUseCaseServicePort;
-  private final ProductRestInboundMapper mapper;
 
   @Override
-  public ResponseEntity<GetProductsResponse> getProducts() {
+  public ResponseEntity<GetProductsResponse> getProductsByCategoryAndShop(
+      String categoryId, String shopId) {
 
     log.info("[Start]  ProductRestControllerAdapterImpl.getProducts - Getting all products");
 
-    List<ProductViewResponse> products =
-        productUseCaseServicePort.findAllProducts().stream().map(mapper::mapToView).toList();
+    List<ProductView> products =
+        productUseCaseServicePort.getProductsByShopIdAndCategory(shopId, categoryId);
 
     log.info("[End]  ProductRestControllerAdapterImpl.getProducts - Getting all products");
-    return ResponseEntity.ok().body(GetProductsResponse.builder().products(products).build());
+
+    return ResponseEntity.ok()
+        .body(
+            GetProductsResponse.builder()
+                .id(UUID.randomUUID().toString())
+                .products(products)
+                .build());
   }
 }

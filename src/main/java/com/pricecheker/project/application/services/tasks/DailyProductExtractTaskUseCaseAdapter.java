@@ -4,7 +4,7 @@ import com.pricecheker.project.application.ports.inbound.DailyProductExtractTask
 import com.pricecheker.project.application.ports.outbound.ProductCategoryRepositoryPort;
 import com.pricecheker.project.application.ports.outbound.ProductPriceRepositoryPort;
 import com.pricecheker.project.application.ports.outbound.ProductRepositoryPort;
-import com.pricecheker.project.application.ports.outbound.StoreRepositoryPort;
+import com.pricecheker.project.application.ports.outbound.ShopRepositoryPort;
 import com.pricecheker.project.application.services.tasks.factory.ScraperFactory;
 import com.pricecheker.project.application.services.tasks.model.*;
 import com.pricecheker.project.application.services.tasks.scrapers.ScraperContext;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DailyProductExtractTaskUseCaseAdapter implements DailyProductExtractTaskUseCasePort {
 
-  private final StoreRepositoryPort storeRepositoryPort;
+  private final ShopRepositoryPort shopRepositoryPort;
   private final ProductRepositoryPort productRepositoryPort;
   private final ProductCategoryRepositoryPort productCategoryRepositoryPort;
   private final ProductPriceRepositoryPort productPriceRepositoryPort;
@@ -50,7 +50,7 @@ public class DailyProductExtractTaskUseCaseAdapter implements DailyProductExtrac
 
   private List<ShopDomainEntity> getShops() {
     try {
-      List<ShopDomainEntity> shops = storeRepositoryPort.findAll();
+      List<ShopDomainEntity> shops = shopRepositoryPort.findAll();
       log.info("Found {} stores to process.", shops.size());
       return shops;
     } catch (Exception e) {

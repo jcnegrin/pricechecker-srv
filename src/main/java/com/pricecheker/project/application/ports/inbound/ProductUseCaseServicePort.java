@@ -1,15 +1,12 @@
 package com.pricecheker.project.application.ports.inbound;
 
-import com.pricecheker.project.domain.entity.ProductDomainEntity;
+import com.pricecheker.project.domain.view.ProductView;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
 public interface ProductUseCaseServicePort {
+  List<ProductView> getProductsByShopIdAndCategory(String shopId, String categoryId);
 
-  List<ProductDomainEntity> findAllProducts();
-
-  List<ProductDomainEntity> getProductsByStore(String store);
-
-  List<ProductDomainEntity> getProductsByCategory(String category);
+  ProductView getProductById(String productId);
 }

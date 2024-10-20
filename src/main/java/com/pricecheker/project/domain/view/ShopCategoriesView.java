@@ -13,6 +13,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ShopCategoriesView {
+  private String shopId;
   private String shop;
   private List<CategoryView> categories;
 }

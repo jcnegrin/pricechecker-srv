@@ -29,7 +29,7 @@ public class QueryCategoriesByShopUseCaseAdapter implements QueryCategoriesBySho
 
   @Override
   public List<ShopCategoriesView> getCategoriesByShop() {
-    return shopUseCaseServicePort.getStores().stream()
+    return shopUseCaseServicePort.getShop().stream()
         .map(
             shop -> {
               List<String> categoryIds = productRepositoryPort.findCategoriesByShop(shop.getId());
@@ -42,7 +42,7 @@ public class QueryCategoriesByShopUseCaseAdapter implements QueryCategoriesBySho
                       .map(category -> new CategoryView(category.getName()))
                       .toList();
 
-              return new ShopCategoriesView(shop.getName(), categories);
+              return new ShopCategoriesView(shop.getId(), shop.getName(), categories);
             })
         .toList();
   }

@@ -41,6 +41,18 @@ public class ProductRepositoryAdapter implements ProductRepositoryPort {
   }
 
   @Override
+  public List<ProductDomainEntity> findProductByShopAndCategory(String shopId, String categoryId) {
+    return repository.findByShopIdAndCategoryId(shopId, categoryId).stream()
+        .map(productRepositoryMapper::toDomain)
+        .toList();
+  }
+
+  @Override
+  public Optional<ProductDomainEntity> findProductById(String productId) {
+    return repository.findById(productId).map(productRepositoryMapper::toDomain);
+  }
+
+  @Override
   public ProductDomainEntity saveProduct(ProductDomainEntity product) {
     return this.productRepositoryMapper.toDomain(
         repository.save(this.productRepositoryMapper.toEntity(product)));

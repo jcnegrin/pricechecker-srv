@@ -1,8 +1,10 @@
 package com.pricecheker.project.infrastructure.adapters.inbound.rest.controller.impl;
 
 import com.pricecheker.project.application.ports.inbound.QueryCategoriesByShopUseCasePort;
+import com.pricecheker.project.domain.view.ShopCategoriesView;
 import com.pricecheker.project.infrastructure.adapters.inbound.rest.controller.CategoryRestControllerAdapter;
 import com.pricecheker.project.infrastructure.adapters.inbound.rest.response.category.QueryCategoriesByShopResponse;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,7 @@ public class CategoryRestControllerAdapterImpl implements CategoryRestController
     log.info(
         "[Start]  CategoryRestControllerAdapterImpl.getCategoriesByShop - Getting all categories by shop");
 
-    var response = service.getCategoriesByShop();
+    List<ShopCategoriesView> response = service.getCategoriesByShop();
 
     log.info(
         "[End]  CategoryRestControllerAdapterImpl.getCategoriesByShop - Getting all categories by shop");
