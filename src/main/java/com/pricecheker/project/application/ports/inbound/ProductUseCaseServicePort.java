@@ -9,4 +9,6 @@ public interface ProductUseCaseServicePort {
   List<ProductView> getProductsByShopIdAndCategory(String shopId, String categoryId);
 
   ProductView getProductById(String productId);
+
+  List<ProductView> getSimilarProducts(String productId);
 }

@@ -4,6 +4,7 @@ import com.pricecheker.project.application.ports.inbound.CategoryUseCaseServiceP
 import com.pricecheker.project.application.ports.outbound.ProductCategoryRepositoryPort;
 import com.pricecheker.project.domain.entity.CategoryDomainEntity;
 import com.pricecheker.project.domain.exception.ShopDoesNotExistsException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,10 @@ public class CategoryUseCaseServiceAdapter implements CategoryUseCaseServicePort
     return repositoryPort
         .findCategoryById(id)
         .orElseThrow(() -> new ShopDoesNotExistsException(id));
+  }
+
+  @Override
+  public List<CategoryDomainEntity> getAllCategories() {
+    return repositoryPort.findAllCategories();
   }
 }

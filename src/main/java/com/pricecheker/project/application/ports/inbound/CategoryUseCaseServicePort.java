@@ -10,7 +10,11 @@ import com.pricecheker.project.domain.entity.CategoryDomainEntity;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.List;
+
 @Validated
 public interface CategoryUseCaseServicePort {
   CategoryDomainEntity getCategoryById(@NotEmpty String id);
+
+  List<CategoryDomainEntity> getAllCategories();
 }

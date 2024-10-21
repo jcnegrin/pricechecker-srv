@@ -6,6 +6,7 @@ import com.pricecheker.project.application.ports.inbound.PriceUseCaseServicePort
 import com.pricecheker.project.application.ports.inbound.ProductUseCaseServicePort;
 import com.pricecheker.project.application.ports.inbound.ShopUseCaseServicePort;
 import com.pricecheker.project.application.ports.outbound.ProductRepositoryPort;
+import com.pricecheker.project.application.utils.SimilarityUtils;
 import com.pricecheker.project.domain.entity.CategoryDomainEntity;
 import com.pricecheker.project.domain.entity.PriceDomainEntity;
 import com.pricecheker.project.domain.entity.ProductDomainEntity;
@@ -91,5 +92,33 @@ public class ProductUseCaseService implements ProductUseCaseServicePort {
 
     log.info("Fetched product: {} with ID: {}", productView.getName(), productId);
     return productView;
+  }
+
+  @Override
+  public List<ProductView> getSimilarProducts(String productId) {
+
+    ProductDomainEntity product =
+        productRepositoryPort
+            .findProductById(productId)
+            .orElseThrow(
+                () -> {
+                  log.error("Product with ID {} not found", productId);
+                  return new ProductNotFoundException(productId);
+                });
+
+    CategoryDomainEntity category = product.getCategory();
+    List<CategoryDomainEntity> categories = categoryUseCaseServicePort.getAllCategories();
+
+    List<CategoryDomainEntity> similarCategories =
+        SimilarityUtils.findSimilarCategories(category, categories);
+
+    List<ProductDomainEntity> products =
+        similarCategories.stream()
+            .map(CategoryDomainEntity::getId)
+            .map(productRepositoryPort::findProductsByCategory)
+            .flatMap(List::stream)
+            .toList();
+
+    return products.stream().map(mapper::toView).toList();
   }
 }

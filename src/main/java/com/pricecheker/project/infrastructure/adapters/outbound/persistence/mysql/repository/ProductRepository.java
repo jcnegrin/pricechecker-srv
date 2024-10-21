@@ -20,4 +20,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, String> 
   @Query("SELECT p FROM ProductEntity p WHERE p.shop.id = :shopId AND p.category.id = :categoryId")
   List<ProductEntity> findByShopIdAndCategoryId(
       @Param(value = "shopId") String shopId, @Param(value = "categoryId") String categoryId);
+
+  List<ProductEntity> findByCategoryId(String categoryId);
 }

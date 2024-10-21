@@ -6,7 +6,6 @@ import com.pricecheker.project.infrastructure.adapters.inbound.rest.controller.P
 import com.pricecheker.project.infrastructure.adapters.inbound.rest.response.product.GetProductsResponse;
 import java.util.List;
 import java.util.UUID;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +30,25 @@ public class ProductRestControllerAdapterImpl implements ProductRestControllerAd
         productUseCaseServicePort.getProductsByShopIdAndCategory(shopId, categoryId);
 
     log.info("[End]  ProductRestControllerAdapterImpl.getProducts - Getting all products");
+
+    return ResponseEntity.ok()
+        .body(
+            GetProductsResponse.builder()
+                .id(UUID.randomUUID().toString())
+                .products(products)
+                .build());
+  }
+
+  @Override
+  public ResponseEntity<GetProductsResponse> getSimilarProducts(String productId) {
+
+    log.info(
+        "[Start]  ProductRestControllerAdapterImpl.getSimilarProducts - Getting similar products");
+
+    List<ProductView> products = productUseCaseServicePort.getSimilarProducts(productId);
+
+    log.info(
+        "[End]  ProductRestControllerAdapterImpl.getSimilarProducts - Getting similar products");
 
     return ResponseEntity.ok()
         .body(
