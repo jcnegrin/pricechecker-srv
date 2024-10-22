@@ -3,8 +3,9 @@ package com.pricecheker.project.application.utils;
 import com.pricecheker.project.domain.entity.CategoryDomainEntity;
 import com.pricecheker.project.domain.entity.ProductDomainEntity;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
-import org.apache.commons.text.similarity.LevenshteinDistance;
+import org.apache.commons.text.similarity.FuzzyScore;
 
 /*
     Author: juannegrin
@@ -14,7 +15,7 @@ import org.apache.commons.text.similarity.LevenshteinDistance;
 
 public class SimilarityUtils {
 
-  private static final LevenshteinDistance levenshteinDistance = new LevenshteinDistance();
+  private static final FuzzyScore fuzzyScore = new FuzzyScore(Locale.ENGLISH);
 
   // Método para buscar categorías similares
   public static List<CategoryDomainEntity> findSimilarCategories(
@@ -22,15 +23,15 @@ public class SimilarityUtils {
     return otherCategories.stream()
         .map(
             category -> {
-              int distance =
-                  levenshteinDistance.apply(targetCategory.getName(), category.getName());
-              return new SimilarCategory(category, distance);
+              int score = fuzzyScore.fuzzyScore(targetCategory.getName(), category.getName());
+              return new SimilarCategory(category, score);
             })
         .filter(
-            similarCategory -> similarCategory.getDistance() <= 10) // Umbral de 5 para categorías
+            similarCategory -> similarCategory.getScore() >= 5) // Umbral ajustado para FuzzyScore
         .sorted(
             (c1, c2) ->
-                Integer.compare(c1.getDistance(), c2.getDistance())) // Ordenar por similitud
+                Integer.compare(
+                    c2.getScore(), c1.getScore())) // Ordenar por puntuación (mayor es mejor)
         .map(SimilarCategory::getCategory)
         .collect(Collectors.toList());
   }
@@ -41,13 +42,15 @@ public class SimilarityUtils {
     return otherProducts.stream()
         .map(
             product -> {
-              int distance = levenshteinDistance.apply(targetProduct.getName(), product.getName());
-              return new SimilarProduct(product, distance);
+              int score = fuzzyScore.fuzzyScore(targetProduct.getName(), product.getName());
+              return new SimilarProduct(product, score);
             })
-        .filter(similarProduct -> similarProduct.getDistance() <= 10) // Umbral de 10 para productos
+        .filter(
+            similarProduct -> similarProduct.getScore() >= 20) // Umbral ajustado para FuzzyScore
         .sorted(
             (p1, p2) ->
-                Integer.compare(p1.getDistance(), p2.getDistance())) // Ordenar por similitud
+                Integer.compare(
+                    p2.getScore(), p1.getScore())) // Ordenar por puntuación (mayor es mejor)
         .map(SimilarProduct::getProduct)
         .collect(Collectors.toList());
   }
@@ -55,37 +58,37 @@ public class SimilarityUtils {
   // Clases de soporte para categorías y productos similares
   private static class SimilarCategory {
     private final CategoryDomainEntity category;
-    private final int distance;
+    private final int score;
 
-    public SimilarCategory(CategoryDomainEntity category, int distance) {
+    public SimilarCategory(CategoryDomainEntity category, int score) {
       this.category = category;
-      this.distance = distance;
+      this.score = score;
     }
 
     public CategoryDomainEntity getCategory() {
       return category;
     }
 
-    public int getDistance() {
-      return distance;
+    public int getScore() {
+      return score;
     }
   }
 
   private static class SimilarProduct {
     private final ProductDomainEntity product;
-    private final int distance;
+    private final int score;
 
-    public SimilarProduct(ProductDomainEntity product, int distance) {
+    public SimilarProduct(ProductDomainEntity product, int score) {
       this.product = product;
-      this.distance = distance;
+      this.score = score;
     }
 
     public ProductDomainEntity getProduct() {
       return product;
     }
 
-    public int getDistance() {
-      return distance;
+    public int getScore() {
+      return score;
     }
   }
 }

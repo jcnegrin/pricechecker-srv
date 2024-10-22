@@ -196,7 +196,7 @@ public class DiaScraper implements ScraperStrategy {
                     .id(UUID.randomUUID())
                     .name(productName)
                     .price(productPrice)
-                    .imgUrl(productImgUrl)
+                    .imgUrl("https://www.dia.es" + productImgUrl)
                     .description("N/A")
                     .category(category)
                     .subCategory(subCategory)

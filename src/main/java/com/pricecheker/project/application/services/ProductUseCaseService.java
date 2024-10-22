@@ -119,6 +119,18 @@ public class ProductUseCaseService implements ProductUseCaseServicePort {
             .flatMap(List::stream)
             .toList();
 
-    return products.stream().map(mapper::toView).toList();
+    List<ProductDomainEntity> similarProducts =
+        SimilarityUtils.findSimilarProducts(product, products);
+
+    return similarProducts.stream()
+        .filter(obj -> !obj.getId().equals(productId))
+        .map(mapper::toView)
+        .peek(
+            productView -> {
+              PriceDomainEntity price =
+                  priceUseCaseServicePort.getLatestPriceByProductId(productView.getId());
+              productView.setPrice(price.getAmount());
+            })
+        .toList();
   }
 }

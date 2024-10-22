@@ -12,7 +12,8 @@ public class CurrencyConverterUtils {
   public static BigDecimal convertStringToBigDecimal(String amount) {
     try {
       String cleanedAmount = amount.replace("€", "").trim();
-      cleanedAmount = cleanedAmount.replace(",", ".");
+      cleanedAmount = cleanedAmount.replace("\u00A0", "");
+      cleanedAmount = cleanedAmount.replace(",", ".").trim();
       return new BigDecimal(cleanedAmount);
     } catch (Exception e) {
       return BigDecimal.ZERO;
