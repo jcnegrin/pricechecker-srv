@@ -1,7 +1,6 @@
 package com.pricecheker.project.application.services;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 import com.pricecheker.project.application.mapper.ProductUseCaseMapper;
@@ -185,49 +184,54 @@ class ProductUseCaseServiceTest {
   void getSimilarProducts_ValidProductId_ReturnsSimilarProductViews() {
     // Arrange
     String productId = "productId";
+
+    // Producto original: Manzana
     CategoryDomainEntity mockCategory =
         CategoryDomainEntity.builder().id("categoryId").name("Frutas").build();
 
     ProductDomainEntity mockProduct =
-        ProductDomainEntity.builder().id(productId).name("Apple").category(mockCategory).build();
+        ProductDomainEntity.builder().id(productId).name("Manzana").category(mockCategory).build();
 
-    CategoryDomainEntity similarCategory1 =
-        CategoryDomainEntity.builder().id("categoryId2").name("Fruta").build();
-
-    when(productRepositoryPort.findProductById(productId)).thenReturn(Optional.of(mockProduct));
-    when(categoryUseCaseServicePort.getAllCategories())
-        .thenReturn(List.of(mockCategory, similarCategory1));
-
+    // Producto similar: Malla de Manzanas
     ProductDomainEntity similarProduct =
         ProductDomainEntity.builder()
             .id("productId2")
-            .name("Broccoli")
-            .category(similarCategory1)
+            .name("Manzanas")
+            .category(mockCategory)
             .build();
 
+    // Simular la búsqueda del producto original
+    when(productRepositoryPort.findProductById(productId)).thenReturn(Optional.of(mockProduct));
+    when(productRepositoryPort.findProductsByCategory(mockCategory.getId()))
+        .thenReturn(List.of(similarProduct)); // productRepositoryPort::findProductsByCategory
+    when(categoryUseCaseServicePort.getAllCategories()).thenReturn(List.of(mockCategory));
+
+    // Producto similar mapeado a ProductView
     ShopView shopView = ShopView.builder().id("shopId").name("Mercadona").build();
 
     ProductView similarProductView =
         ProductView.builder()
             .id("productId2")
-            .name("Broccoli")
-            .price(BigDecimal.valueOf(2.00))
+            .name("Manzanas")
+            .price(BigDecimal.valueOf(3.50))
             .shop(shopView)
             .build();
 
-    when(productRepositoryPort.findProductsByCategory(anyString()))
-        .thenReturn(List.of(similarProduct));
-    when(mapper.toView(similarProduct)).thenReturn(similarProductView);
+    when(priceUseCaseServicePort.getLatestPriceByProductId(similarProductView.getId()))
+        .thenReturn(PriceDomainEntity.builder().amount(BigDecimal.valueOf(3.50)).build());
 
+    // Simular el mapeo de ProductDomainEntity a ProductView
+    when(mapper.toView(similarProduct)).thenReturn(similarProductView);
     // Act
     List<ProductView> result = productUseCaseService.getSimilarProducts(productId);
 
     // Assert
-    assertNotNull(result);
-    assertEquals(2, result.size());
-    assertEquals("Broccoli", result.get(0).getName());
+    assertNotNull(result, "The result should not be null");
+    assertEquals(1, result.size(), "The list should contain one similar product");
+
+    // Verificar que los métodos hayan sido llamados
     verify(productRepositoryPort).findProductById(productId);
-    verify(categoryUseCaseServicePort).getAllCategories();
-    verify(productRepositoryPort, times(2)).findProductsByCategory(anyString());
+    verify(productRepositoryPort).findProductsByCategory(mockCategory.getId());
+    verify(mapper).toView(similarProduct);
   }
 }

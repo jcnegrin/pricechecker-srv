@@ -13,6 +13,7 @@ import com.pricecheker.project.domain.entity.ProductDomainEntity;
 import com.pricecheker.project.domain.entity.ShopDomainEntity;
 import com.pricecheker.project.domain.exception.ProductNotFoundException;
 import com.pricecheker.project.domain.view.ProductView;
+import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,6 +60,7 @@ public class ProductUseCaseService implements ProductUseCaseServicePort {
                   product.setPrice(price.getAmount());
                   return product;
                 })
+            .filter(productView -> !productView.getPrice().equals(BigDecimal.ZERO.setScale(2)))
             .toList();
 
     log.info(
@@ -131,6 +133,7 @@ public class ProductUseCaseService implements ProductUseCaseServicePort {
                   priceUseCaseServicePort.getLatestPriceByProductId(productView.getId());
               productView.setPrice(price.getAmount());
             })
+        .filter(productView -> !productView.getPrice().equals(BigDecimal.ZERO.setScale(2)))
         .toList();
   }
 }

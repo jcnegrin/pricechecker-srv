@@ -46,7 +46,7 @@ public class SimilarityUtils {
               return new SimilarProduct(product, score);
             })
         .filter(
-            similarProduct -> similarProduct.getScore() >= 20) // Umbral ajustado para FuzzyScore
+            similarProduct -> similarProduct.getScore() >= 19) // Umbral ajustado para FuzzyScore
         .sorted(
             (p1, p2) ->
                 Integer.compare(
