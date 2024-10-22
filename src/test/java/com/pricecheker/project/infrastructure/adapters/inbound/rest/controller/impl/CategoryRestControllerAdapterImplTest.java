@@ -35,13 +35,13 @@ class CategoryRestControllerAdapterImplTest {
   void testGetCategoriesByShop() throws Exception {
     // Simulamos la estructura de ShopCategoriesView
     List<CategoryView> mockCategories1 =
-        List.of(new CategoryView("Electronics"), new CategoryView("Groceries"));
+        List.of(new CategoryView("12", "Electronics"), new CategoryView("12", "Groceries"));
     List<CategoryView> mockCategories2 =
-        List.of(new CategoryView("Clothing"), new CategoryView("Books"));
+        List.of(new CategoryView("12", "Clothing"), new CategoryView("12", "Books"));
     List<ShopCategoriesView> shopCategoriesViews =
         List.of(
-            new ShopCategoriesView("","Shop1", mockCategories1),
-            new ShopCategoriesView("","Shop2", mockCategories2));
+            new ShopCategoriesView("", "Shop1", mockCategories1),
+            new ShopCategoriesView("", "Shop2", mockCategories2));
 
     // Simulamos el comportamiento del servicio
     when(service.getCategoriesByShop()).thenReturn(shopCategoriesViews);
