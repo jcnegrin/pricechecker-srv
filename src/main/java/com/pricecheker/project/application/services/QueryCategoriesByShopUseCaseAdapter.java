@@ -39,7 +39,7 @@ public class QueryCategoriesByShopUseCaseAdapter implements QueryCategoriesBySho
                       .map(productCategoryRepositoryPort::findCategoryById)
                       .filter(Optional::isPresent)
                       .map(Optional::get)
-                      .map(category -> new CategoryView(category.getName()))
+                      .map(category -> new CategoryView(category.getId(), category.getName()))
                       .toList();
 
               return new ShopCategoriesView(shop.getId(), shop.getName(), categories);

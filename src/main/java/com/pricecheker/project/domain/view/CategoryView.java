@@ -12,5 +12,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CategoryView {
+  private String id;
   private String name;
 }
